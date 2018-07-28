@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Address Book</title>
+    <link href="https://fonts.googleapis.com/css?family=Maven+Pro" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    
+        <form>
+            <h1>My Contacts</h1>
+            <input type="text" placeholder="Name">
+            <input type="text" placeholder="Email">
+            <input type="text" placeholder="Phone">
+            <input type="text" placeholder="Relation">
+            <button onclick="book.add();" class="add" type="button">Add</button>
+        </form>
+
+        <section class="listOfContacts"></section>
 
     <script src="scripts/script.js"></script>
 </body>

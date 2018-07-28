@@ -1,26 +1,53 @@
 "use strict";
 class AddressBook {
     constructor() {
-        this.contacts = [];
+      this.contacts = [];
     }
-    add(info) {
-        this.contacts.push(info);
+    add() {
+      const inputs = document.querySelectorAll("input[type='text']");
+      this.contacts.push(new Contact(inputs[0].value, inputs[1].value, inputs[2].value, inputs[3].value));
+      this.display();
     }
     deleteAt(index) {
-        index = this.contacts.splice(prompt("What is the index of the contact you would like to delete?"), 1);
+      this.contacts.splice(index, 1);
+      this.display();
     }
-    update(index) {
-        index = this.contacts.splice(prompt("What is the index of the contact you would like to update?"), 1, new Contact(prompt("Name?"), prompt("Email?"), prompt("Phone?"), prompt("Relation?")));
+    display() {
+      this.clear();
+      let index = 0;
+
+      for (let contact of this.contacts) {
+        const listOfContacts = document.querySelector(".listOfContacts");
+        const contactBox = document.createElement("section");
+        contactBox.className = "box";
+        document.querySelector(".listOfContacts").appendChild(contactBox);
+        const name = document.createElement("p");
+        const email = document.createElement("p");
+        const phone = document.createElement("p");
+        const relation = document.createElement("p");
+
+        name.textContent = `Name: ${contact.name}`;
+        email.textContent = `Email: ${contact.email}`;
+        phone.textContent = `Phone: ${contact.phone}`;
+        relation.textContent = `Relation: ${contact.relation}`;
+
+        document.querySelector(".listOfContacts").lastElementChild.appendChild(name);
+        document.querySelector(".listOfContacts").lastElementChild.appendChild(email);
+        document.querySelector(".listOfContacts").lastElementChild.appendChild(phone);
+        document.querySelector(".listOfContacts").lastElementChild.appendChild(relation);
+
+        const deleteBtn = document.createElement("section");
+        deleteBtn.className = "delete";
+        deleteBtn.innerHTML = `<button onclick="book.deleteAt(${index});" class="list__btn" type="button"><i class="material-icons">delete</i></button>`;
+        document.querySelector(".listOfContacts").lastElementChild.appendChild(deleteBtn);
+        index++;
+      }
     }
-    print() {
-        console.log(this.contacts);
+    clearList() {
+      this.contacts = [];
     }
-    deleteByName(name) {
-        for (let i = 0; i < this.contacts.length; i++) {
-            if (name === this.contacts[i].name) {
-                this.contacts.splice(i, 1);
-            }
-        }
+    clear() {
+      document.querySelector(".listOfContacts").innerHTML = "";
     }
 }
 
@@ -34,35 +61,6 @@ class Contact {
 }
 
 const book = new AddressBook();
-book.add(new Contact("Nicole", "nicoleishot@yawhom.com", "419-867-5509", "wife"));
-book.add(new Contact("Jim", "jimiscool@yawhom.com", "419-777-8989", "father"));
-let runAddressBook = prompt(`Would you like to "add" a contact, "delete" a contact, "update" a contact, "print" your list of contacts, or "quit"?`);
-
-while (true) {
-    if (runAddressBook.toLowerCase() === "add") {
-        book.add(new Contact(prompt("Name?"), prompt("Email?"), prompt("Phone?"), prompt("Relation?")));
-        runAddressBook = prompt(`Would you like to "add" a contact, "delete" a contact, "update" a contact, "print" your list of contacts, or "quit"?`);
-    } else if (runAddressBook.toLowerCase() === "delete") {
-        let howDelete = prompt(`Would you like to delete by "index" or "name"?`);
-        if (howDelete.toLowerCase() === "index") {
-            book.deleteAt();
-        } else if (howDelete.toLowerCase() === "name") {
-            let name = prompt("What is the name of the contact you would like to delete? (CASE SPECIFIC)");
-            book.deleteByName(name);
-        } else {
-            howDelete = prompt(`Would you like to delete by "index" or "name"?`);
-        }
-        runAddressBook = prompt(`Would you like to "add" a contact, "delete" a contact, "update" a contact, "print" your list of contacts, or "quit"?`);
-    } else if (runAddressBook.toLowerCase() === "update") {
-        book.update();
-        runAddressBook = prompt(`Would you like to "add" a contact, "delete" a contact, "update" a contact, "print" your list of contacts, or "quit"?`);
-    } else if (runAddressBook.toLowerCase() === "print") {
-        book.print();
-        runAddressBook = prompt(`Would you like to "add" a contact, "delete" a contact, "update" a contact, "print" your list of contacts, or "quit"?`);
-    } else if (runAddressBook.toLowerCase() === "quit") {
-        console.log(`You have quit`);
-        break;
-    } else {
-        runAddressBook = prompt(`Would you like to "add" a contact, "delete" a contact, "update" a contact, "print" your list of contacts, or "quit"?`);
-    }
-}
+book.add(new Contact("Megan", "megan@grandcircus.co", "111-222-3333", "friend"));
+book.add(new Contact("Julie", "julie@grandcircus.co", "111-222-3333", "coworker"));
+book.add(new Contact("Jon", "jon@grandcircus.co", "111-222-3333", "coworker"));
